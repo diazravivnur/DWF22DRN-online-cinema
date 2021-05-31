@@ -1,11 +1,27 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../contexts/userContext";
+import { API } from "../../config/api";
 
 function Hero() {
   const [state] = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const router = useHistory();
+  const [film, setFilm] = useState([]);
+
+  const loadFilm = async () => {
+    try {
+      const response = await API.get(`/films/${id}`);
+      setFilm(response.data.data.film);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const { id, thumbnail } = film;
+
+  const goToPage = () => {
+    router.push(`/films/${20}`);
+  };
 
   return (
     <div>
@@ -14,19 +30,14 @@ function Hero() {
           <div className="hero-content">
             <h3>Deadpool</h3>
             <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.{" "}
+              Deadpool adalah sebuah film pahlawan super Amerika yang
+              berdasarkan pada karakter Marvel Comics dengan nama yang sama.
+              Film tersebut merupakan instalmen kedelapan dalam serial film
+              X-Men
             </p>
             {!state.isLogin ? (
               <>
-                <div
-                  className="hero-link"
-                  onClick={() => {
-                    setIsOpen(true);
-                  }}
-                >
+                <div className="hero-link" onClick={goToPage}>
                   Buy Now
                 </div>
               </>

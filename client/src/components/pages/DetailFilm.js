@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
 
+import { Player } from "video-react";
+
 import FormModal from "../Modal/Modal";
 import BuyModal from "../Modal/Buy";
 
@@ -53,7 +55,7 @@ function DetailFIlm() {
             </button>
           </div>
           {/* Videos goes here */}
-
+          <Player playsInline poster={image_url} src={film.filmURL} />
           {/* Categories goes here */}
 
           {/* Price */}

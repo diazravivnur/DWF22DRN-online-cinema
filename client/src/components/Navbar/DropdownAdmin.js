@@ -27,7 +27,7 @@ function DropdownAdmin() {
         }
       >
         <li>
-          <NavDropdown.Item onClick={() => router.push("/Add Film")}>
+          <NavDropdown.Item onClick={() => router.push("/AddFilm")}>
             <div
               style={{
                 display: "flex",
@@ -39,7 +39,7 @@ function DropdownAdmin() {
           </NavDropdown.Item>
         </li>
         <li>
-          <NavDropdown.Item>
+          <NavDropdown.Item onClick={() => router.push("/translist")}>
             <div
               style={{
                 display: "flex",
