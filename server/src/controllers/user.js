@@ -146,7 +146,7 @@ exports.updateProfile = async (req, res) => {
     console.log(error);
     res.status(500).send({
       status: "failed",
-      message: "server error WKWKKWW",
+      message: "server error ",
     });
   }
 };

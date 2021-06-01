@@ -6,9 +6,9 @@ import { API } from "../../config/api";
 function ListFilm() {
   const [films, setFilms] = useState([]);
 
-  const loadFilms = async () => {
+  const loadOwnedFilms = async () => {
     try {
-      const response = await API.get("/films");
+      const response = await API.get("/films/owned");
       setFilms(response.data.data.film);
     } catch (error) {
       console.log(error);
@@ -16,7 +16,7 @@ function ListFilm() {
   };
 
   useEffect(() => {
-    loadFilms();
+    loadOwnedFilms();
   }, []);
 
   return (

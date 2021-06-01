@@ -25,25 +25,27 @@ const Navbar = () => {
   };
 
   const handleShowLogin = () => {
-    setShowLogin(true);
+    dispatch({ type: "showLoginPopup" });
   };
   const handleCloseLogin = () => {
-    setShowLogin(false);
+    dispatch({ type: "hideLoginPopup" });
   };
 
   const toggleToRegister = () => {
     setShowRegister(true);
-    setShowLogin(false);
+    dispatch({ type: "hideLoginPopup" });
   };
 
   const toggleToLogin = () => {
-    setShowLogin(true);
+    dispatch({ type: "showLoginPopup" });
     setShowRegister(false);
   };
 
+  console.log("state", state);
+
   return (
     <>
-      <FormModal show={showLogin} handleClose={handleCloseLogin}>
+      <FormModal show={state.showLoginPopup} handleClose={handleCloseLogin}>
         <Login toggle={toggleToRegister} handleClose={handleCloseLogin} />
       </FormModal>
       <FormModal show={showRegister} handleClose={handleCloseRegister}>
@@ -57,10 +59,9 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="nav-link1">
-          {state.login ? (
-            // <DropdownAdmin></DropdownAdmin>
-            <DropdownUser></DropdownUser>
-          ) : (
+          {state.login && state.user?.id === 1 && <DropdownAdmin />}
+          {state.login && state.user?.id !== 1 && <DropdownUser />}
+          {!state.login && (
             <ul className="navbar-ul">
               <label onClick={handleShowLogin} className="link-login">
                 Login

@@ -368,6 +368,21 @@ button:hover {
   font-weight: 700;
 }
 
+.history-trans {
+  background-color: #5a1432;
+
+  width: 419px;
+  height: 101px;
+}
+
+.history-trans h5 {
+  color: #fff;
+}
+.history-price {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
 /* Detail Film */
 .film-container {
   display: flex;

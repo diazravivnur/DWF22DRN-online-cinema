@@ -15,12 +15,6 @@ module.exports = (sequelize, DataTypes) => {
           name: "filmid",
         },
       });
-      film.belongsTo(models.user, {
-        as: "user",
-        foreignKey: {
-          name: "userid",
-        },
-      });
       film.belongsTo(models.category, {
         as: "category",
         foreignKey: {

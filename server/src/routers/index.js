@@ -33,9 +33,11 @@ const {
   getFilmDetail,
   deleteFilm,
   updateFilm,
+  ownedFilms,
 } = require("../controllers/film");
 router.post("/film", uploadFile("thumbnail"), createFilm);
 router.get("/films", getFilm);
+router.get("/films/owned", auth, ownedFilms);
 router.get("/films/:id", getFilmDetail);
 router.delete("/films/:id", deleteFilm);
 router.put("/films/:id", uploadFile("thumbnail"), updateFilm);
@@ -45,9 +47,18 @@ const {
   createTransaction,
   getTransaction,
   deleteTransaction,
+  patchApprove,
+  patchDecline,
 } = require("../controllers/transaction");
-router.post("/transaction", uploadFile("transferProof"), createTransaction);
+router.post(
+  "/transaction",
+  uploadFile("transferProof"),
+  auth,
+  createTransaction
+);
 router.get("/transactions", getTransaction);
 router.delete("/transactions/:id", deleteTransaction);
+router.patch("/trans/approve/:id", patchApprove);
+router.patch("/trans/decline/:id", patchDecline);
 
 module.exports = router;

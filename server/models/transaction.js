@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
   transaction.init(
     {
       status: DataTypes.STRING,
-      accountNumber: DataTypes.INTEGER,
       transferProof: DataTypes.STRING,
       orderDate: DataTypes.STRING,
     },

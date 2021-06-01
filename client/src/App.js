@@ -8,6 +8,7 @@ import ListFilm from "./components/pages/ListFilm";
 import DetailFilm from "./components/pages/DetailFilm";
 import Profile from "./components/pages/Profile";
 import TransactionList from "./components/pages/TransactionList";
+import PrivateRoute from "./components/PrivateRoute";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "video-react/dist/video-react.css";
@@ -23,12 +24,19 @@ function App() {
           <Navbar />
           <Switch>
             <Route path="/" exact component={Home}></Route>
-
             <Route path="/listfilm" exact component={ListFilm}></Route>
             <Route path="/addfilm" exact component={AddFilm}></Route>
-            <Route path="/films/:id" exact component={DetailFilm}></Route>
+            <PrivateRoute
+              path="/films/:id"
+              exact
+              component={DetailFilm}
+            ></PrivateRoute>
             <Route path="/profile" exact component={Profile}></Route>
-            <Route path="/translist" exact component={TransactionList}></Route>
+            <Route
+              path="/admin/translist"
+              exact
+              component={TransactionList}
+            ></Route>
           </Switch>
         </Router>
       </UserContextProvider>

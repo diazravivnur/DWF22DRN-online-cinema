@@ -4,10 +4,13 @@ const fs = require("fs");
 exports.createTransaction = async (req, res) => {
   try {
     const transferProof = req.files.transferProof[0].filename;
-
+    console.log(req.userid);
     const datatransaction = await transaction.create({
       ...req.body,
+      status: "Pending",
+      userid: req.userId,
       transferProof,
+      orderDate: new Date().toString(),
     });
 
     res.status(200).send({
@@ -90,6 +93,80 @@ exports.deleteTransaction = async (req, res) => {
     res.status(500).send({
       status: "failed",
       message: "server error",
+    });
+  }
+};
+
+exports.patchApprove = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const finduser = await transaction.findOne({ where: { id } });
+
+    if (!finduser) {
+      return res.send({
+        status: "failed",
+        message: "data not found",
+      });
+    }
+
+    await transaction.update(
+      {
+        status: "Approved",
+      },
+      { where: { id } }
+    );
+
+    res.status(200).send({
+      status: "Success",
+      data: {
+        transaction: {
+          status: transaction.status,
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "server error ",
+    });
+  }
+};
+
+exports.patchDecline = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const finduser = await transaction.findOne({ where: { id } });
+
+    if (!finduser) {
+      return res.send({
+        status: "failed",
+        message: "data not found",
+      });
+    }
+
+    await transaction.update(
+      {
+        status: "Declined",
+      },
+      { where: { id } }
+    );
+
+    res.status(200).send({
+      status: "Success",
+      data: {
+        transaction: {
+          status: transaction.status,
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "server error ",
     });
   }
 };

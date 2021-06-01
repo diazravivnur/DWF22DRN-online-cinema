@@ -1,12 +1,14 @@
 import { useState, useContext } from "react";
 import { API, setAuthToken } from "../../config/api";
 import { UserContext } from "../../contexts/userContext";
+import { useHistory } from "react-router-dom";
 
 const Login = ({ toggle, handleClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [, dispatch] = useContext(UserContext);
+  let history = useHistory();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -18,12 +20,15 @@ const Login = ({ toggle, handleClose }) => {
 
       setMessage(response.data.message);
       setAuthToken(response.data.data.user.token);
-
+      console.log(response.data.data.user);
       dispatch({
         type: "login",
         payload: response.data.data.user,
       });
       handleClose();
+      if (response.data.data.user.id === 1) {
+        history.push("/admin/translist");
+      }
     } catch (error) {
       console.log(error);
     }

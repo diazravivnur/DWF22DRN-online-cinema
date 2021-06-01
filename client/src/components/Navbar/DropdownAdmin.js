@@ -39,7 +39,7 @@ function DropdownAdmin() {
           </NavDropdown.Item>
         </li>
         <li>
-          <NavDropdown.Item onClick={() => router.push("/translist")}>
+          <NavDropdown.Item onClick={() => router.push("/admin/translist")}>
             <div
               style={{
                 display: "flex",

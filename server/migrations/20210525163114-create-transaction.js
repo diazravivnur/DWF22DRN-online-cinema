@@ -31,9 +31,6 @@ module.exports = {
       status: {
         type: Sequelize.STRING,
       },
-      accountNumber: {
-        type: Sequelize.INTEGER,
-      },
       transferProof: {
         type: Sequelize.STRING,
       },

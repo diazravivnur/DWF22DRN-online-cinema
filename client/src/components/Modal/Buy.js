@@ -8,14 +8,15 @@ import { UserContext } from "../../contexts/userContext";
 import Transferpayment from "../../components/pictures/Transferpayment.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function BuyModal({ title, price, show, handleClose }) {
+function BuyModal({ filmid, title, price, show, handleClose }) {
   const params = useParams();
   const { id } = params;
   const [preview, setPreview] = useState();
   const [, dispatch] = useContext(UserContext);
 
   const [form, setForm] = useState({
-    accountNumber: "",
+    filmid: "",
+
     transferProof: "",
   });
 
@@ -36,14 +37,11 @@ function BuyModal({ title, price, show, handleClose }) {
       };
 
       const formData = new FormData();
-      formData.set("accNumber", form.accNumber);
-      formData.append(
-        "imageFile",
-        form.transferProof[0],
-        form.transferProof[0].fullName
-      );
 
-      await API.post(`/transaction/${id}`, formData, config);
+      formData.append("filmid", filmid);
+      formData.append("transferProof", form.transferProof[0]);
+
+      await API.post(`/transaction`, formData, config);
 
       handleClose();
     } catch (error) {
@@ -75,14 +73,6 @@ function BuyModal({ title, price, show, handleClose }) {
             }}
           >
             <div className="form-modal1">
-              <input
-                type="number"
-                name="accountNumber"
-                placeholder="Input Your Account Number"
-                className="input-modal1"
-                onChange={(e) => onChange(e)}
-              ></input>
-
               <div
                 className="img-proof"
                 style={{

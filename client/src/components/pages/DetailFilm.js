@@ -40,6 +40,7 @@ function DetailFIlm() {
     <>
       <FormModal show={showBuy} handleClose={handleCloseBuy}>
         <BuyModal
+          filmid={film?.id}
           title={film?.tittle}
           price={film?.price}
           show={showBuy}

@@ -23,26 +23,18 @@ exports.regitrasi = async (req, res) => {
       });
     }
 
-    const checkEmail = await user.findOne({
+    const registeredUser = await user.findOne({
       where: {
         email,
       },
     });
 
-    if (checkEmail) {
+    if (registeredUser) {
       return res.send({
         status: "Failed",
         message: "Email Already Registered",
       });
     }
-
-    const secretKey = "myCustomPassword";
-    const token = jwt.sign(
-      {
-        id: email,
-      },
-      secretKey
-    );
 
     const hashStrenght = 10;
     const hashedPassword = await bcrypt.hash(password, hashStrenght);
@@ -51,6 +43,14 @@ exports.regitrasi = async (req, res) => {
       ...data,
       password: hashedPassword,
     });
+
+    const secretKey = "myCustomPassword";
+    const token = jwt.sign(
+      {
+        id: dataUser.id,
+      },
+      secretKey
+    );
 
     res.send({
       status: "Success",
@@ -89,20 +89,23 @@ exports.login = async (req, res) => {
       });
     }
 
-    const checkEmail = await user.findOne({
+    const registeredUser = await user.findOne({
       where: {
         email,
       },
     });
 
-    if (!checkEmail) {
+    if (!registeredUser) {
       return res.send({
         status: "Login Failed",
         message: "Email and Password don't match",
       });
     }
 
-    const isValidPassword = await bcrypt.compare(password, checkEmail.password);
+    const isValidPassword = await bcrypt.compare(
+      password,
+      registeredUser.password
+    );
 
     if (!isValidPassword) {
       return res.send({
@@ -115,7 +118,7 @@ exports.login = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: email,
+        id: registeredUser.id,
       },
       secretKey
     );
@@ -124,9 +127,9 @@ exports.login = async (req, res) => {
       status: "success",
       data: {
         user: {
-          id: checkEmail.id,
-          fullName: checkEmail.fullName,
-          email: checkEmail.email,
+          id: registeredUser.id,
+          fullName: registeredUser.fullName,
+          email: registeredUser.email,
           token,
         },
       },

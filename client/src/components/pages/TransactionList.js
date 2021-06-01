@@ -33,7 +33,7 @@ const TransactionList = () => {
             <th>Id</th>
 
             <th>Status</th>
-            <th>Account Number</th>
+
             <th>Order Date</th>
             <th>TransferProof</th>
             <th>Action</th>
@@ -46,11 +46,11 @@ const TransactionList = () => {
               <tr>
                 <td>{trx.id}</td>
                 <td>{trx.status}</td>
-                <td>{trx.accountNumber}</td>
+
                 <td>{trx.orderDate}</td>
                 <td>{trx.transferProof}</td>
                 <td>
-                  <DropdownAction></DropdownAction>
+                  <DropdownAction id={trx?.id}></DropdownAction>
                 </td>
               </tr>
             );

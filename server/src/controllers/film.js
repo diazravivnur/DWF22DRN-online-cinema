@@ -1,4 +1,4 @@
-const { film, category } = require("../../models");
+const { film, category, transaction } = require("../../models");
 const fs = require("fs");
 
 exports.createFilm = async (req, res) => {
@@ -191,6 +191,45 @@ exports.updateFilm = async (req, res) => {
     res.status(500).send({
       status: "failed",
       message: "server error WKWKKWW",
+    });
+  }
+};
+
+exports.ownedFilms = async (req, res) => {
+  try {
+    const datafilm = await film.findAll({
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+
+      include: [
+        {
+          model: transaction,
+          as: "transaction",
+          where: {
+            userid: req.userId,
+            status: "Approved",
+          },
+        },
+      ],
+    });
+
+    if (!datafilm) {
+      return res.send({
+        status: "failed",
+        message: "data not found",
+      });
+    }
+
+    res.status(200).send({
+      status: "success",
+      data: { film: datafilm },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "server error",
     });
   }
 };

@@ -4,10 +4,11 @@ import Hero from "../Hero/Hero";
 import Card from "../Card/Card";
 import { API } from "../../config/api";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { UserContext } from "../../contexts/userContext";
 
 function HomePage() {
   const router = useHistory();
-
+  const [state] = useContext(UserContext);
   const [films, setFilms] = useState([]);
 
   const loadFilms = async () => {
@@ -22,6 +23,12 @@ function HomePage() {
   useEffect(() => {
     loadFilms();
   }, []);
+
+  useEffect(() => {
+    if (state.user?.id === 1) {
+      router.push("/admin/translist");
+    }
+  }, [state.user]);
 
   return (
     <>

@@ -1,16 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
-import { UserContext } from "./context/userContext";
+import { UserContext } from "../contexts/userContext";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const [state, dispatch] = useContext(UserContext);
-  const { isLogin } = state;
+  const { login } = state;
+  useEffect(() => {
+    if (!login) {
+      dispatch({ type: "showLoginPopup" });
+    }
+  }, [login]);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        isLogin ? <Component {...props} /> : <Redirect to="/" />
+        login ? <Component {...props} /> : <Redirect to="/" />
       }
     />
   );
