@@ -15,11 +15,11 @@ function Profile() {
       console.log(error);
     }
   };
-  console.log(state);
   useEffect(() => {
     loadProfile();
   }, []);
 
+  console.log(profile);
   return (
     <div className="container-profile">
       <div className="profile">
@@ -40,7 +40,7 @@ function Profile() {
 
             <h6>Phone</h6>
 
-            <p>083896833122</p>
+            <p>{state.user.phone}</p>
             {/* <h3>My Films</h3>
             films goes here */}
           </div>
@@ -48,6 +48,9 @@ function Profile() {
         <Link to={`/updateprofile/${state.user.id}`}>
           <button className="hero-link">Edit Profile</button>
         </Link>
+      </div>
+      <div className="profile">
+        <h1>History Transaction</h1>
       </div>
     </div>
   );

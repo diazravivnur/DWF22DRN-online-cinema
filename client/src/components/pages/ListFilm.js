@@ -22,8 +22,8 @@ function ListFilm() {
   return (
     <>
       <div className="container mt-5">
-        <div className="film-header">
-          <h3>All Films</h3>
+        <div className="hero-content">
+          <h3>My Films</h3>
         </div>
         <div className="card ">
           <div className="card-body card-fund">

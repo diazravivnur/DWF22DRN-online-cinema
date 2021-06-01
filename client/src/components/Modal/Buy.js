@@ -8,7 +8,7 @@ import { UserContext } from "../../contexts/userContext";
 import Transferpayment from "../../components/pictures/Transferpayment.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function BuyModal({ show, handleClose }) {
+function BuyModal({ title, price, show, handleClose }) {
   const params = useParams();
   const { id } = params;
   const [preview, setPreview] = useState();
@@ -60,11 +60,11 @@ function BuyModal({ show, handleClose }) {
         <div className="header">
           <h3>Cinema Online : </h3>
         </div>
-        <h3>Judul Film</h3>
+        <h3>{title}</h3>
         <div className="total-payment">
           <h4> Total : </h4>
           <div className="total-payment-number">
-            <h4> Rp.5000 </h4>
+            <h4> Rp. {price}</h4>
           </div>
         </div>
         <div className="title-modal1">

@@ -38,7 +38,7 @@ export const DropdownUser = () => {
           </NavDropdown.Item>
         </li>
         <li>
-          <NavDropdown.Item>
+          <NavDropdown.Item onClick={() => router.push("/listfilm")}>
             <div
               style={{
                 display: "flex",

@@ -10,7 +10,7 @@ import Profile from "./components/pages/Profile";
 import TransactionList from "./components/pages/TransactionList";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "video-react/dist/video-react.css";
 import "./styles/global.css";
 
 import Navbar from "./components/Navbar/Navbar";

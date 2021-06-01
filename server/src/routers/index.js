@@ -16,10 +16,10 @@ const {
   deleteUser,
   updateProfile,
 } = require("../controllers/user");
-router.get("/userss", auth, getUser);
-router.get("/userss/:id", auth, getUserDetail);
-router.delete("/userss/:id", auth, deleteUser);
-router.put("/userss/:id", uploadFile("avatar"), updateProfile);
+router.get("/users", auth, getUser);
+router.get("/user/:id", auth, getUserDetail);
+router.delete("/user/:id", auth, deleteUser);
+router.put("/user/:id", uploadFile("avatar"), updateProfile);
 
 // CATEGORY
 const { createCategory, getCategory } = require("../controllers/category");

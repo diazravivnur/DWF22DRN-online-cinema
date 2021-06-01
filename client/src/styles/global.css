@@ -132,6 +132,7 @@ button:hover {
 .navbar1 p {
   color: white;
 }
+
 .img-profile {
   box-sizing: border-box;
   border-radius: 50%;
@@ -334,6 +335,11 @@ button:hover {
 }
 .profile h1 {
   color: #fff;
+  font-size: 45px;
+  font-weight: bold;
+  margin-top: 0;
+  width: 105%;
+  line-height: 58px;
 }
 
 .profile-detail {

@@ -58,9 +58,9 @@ const Navbar = () => {
         </div>
         <div className="nav-link1">
           {state.login ? (
-            <DropdownAdmin></DropdownAdmin>
+            // <DropdownAdmin></DropdownAdmin>
+            <DropdownUser></DropdownUser>
           ) : (
-            // <DropdownUser></DropdownUser>
             <ul className="navbar-ul">
               <label onClick={handleShowLogin} className="link-login">
                 Login
