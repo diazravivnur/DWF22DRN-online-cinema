@@ -170,3 +170,34 @@ exports.patchDecline = async (req, res) => {
     });
   }
 };
+
+exports.getTransactionUser = async (req, res) => {
+  try {
+    let datatransaction = await transaction.findAll({
+      where: { userid: req.userId },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+      include: [
+        {
+          model: film,
+          as: "film",
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "userid", "categoryid"],
+          },
+        },
+      ],
+    });
+
+    res.status(200).send({
+      status: "success",
+      data: { transaction: datatransaction },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "server error",
+    });
+  }
+};

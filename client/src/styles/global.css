@@ -115,7 +115,18 @@ button:hover {
 .dropdown-menu.show {
   background-color: black;
 }
-.dropdown-menu::after {
+.navbar1 .dropdown-menu::after {
+  position: absolute;
+  top: -10%;
+  left: 130%;
+  margin-left: -56%;
+  content: "";
+  width: 0;
+  height: 0;
+  border: black;
+  border-bottom: solid 30px black;
+  border-left: solid 25px transparent;
+  border-right: solid 25px transparent;
 }
 
 .navbar1 .nav-link1 ul .link-register {
@@ -382,6 +393,7 @@ button:hover {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  color: #cd2e71;
 }
 /* Detail Film */
 .film-container {
@@ -459,4 +471,28 @@ list-donation-content {
   font-size: 12px;
   line-height: 14px;
   color: #974a4a;
+}
+
+.popup {
+  background-color: #fff;
+}
+.popup p {
+  color: #469f74;
+}
+
+/* table */
+.table-container {
+  margin-left: 100px;
+  margin-right: 100px;
+  color: #ffffff;
+}
+.table-container h3 {
+  font-size: 45px;
+  font-weight: bold;
+  margin-top: 0;
+  width: 105%;
+  line-height: 58px;
+}
+.table-container thead tr th {
+  color: red;
 }

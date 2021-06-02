@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
 import { Table } from "react-bootstrap";
 
+import "bootstrap/dist/css/bootstrap.min.css";
 import DropdownAction from "../Navbar/DropdownAction";
 
 const TransactionList = () => {
@@ -24,39 +25,44 @@ const TransactionList = () => {
   console.log(trans);
   return (
     <div>
-      <div className="hero-content">
+      <div className="table-container">
         <h3>Incoming Transaction </h3>
-      </div>
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>Id</th>
 
-            <th>Status</th>
-
-            <th>Order Date</th>
-            <th>TransferProof</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {trans.map((trx) => {
-            console.log("trx", trx);
-            return (
+        <div>
+          <Table striped bordered hover variant="dark">
+            <thead>
               <tr>
-                <td>{trx.id}</td>
-                <td>{trx.status}</td>
+                <th>Id</th>
+                <th>Users</th>
+                <th>Bukti Transfer</th>
+                <th>Film</th>
 
-                <td>{trx.orderDate}</td>
-                <td>{trx.transferProof}</td>
-                <td>
-                  <DropdownAction id={trx?.id}></DropdownAction>
-                </td>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+            </thead>
+            <tbody className="">
+              {trans.map((trx) => {
+                console.log("trx", trx);
+                return (
+                  <tr>
+                    <td>{trx.id}</td>
+                    <td>{trx.user.fullName}</td>
+                    <td>{trx.transferProof}</td>
+                    <td>{trx.film.tittle}</td>
+                    <td>{trx.orderDate}</td>
+                    <td>{trx.status}</td>
+                    <td>
+                      <DropdownAction id={trx?.id}></DropdownAction>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+      </div>
     </div>
   );
 };

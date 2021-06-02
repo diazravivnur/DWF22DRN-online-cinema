@@ -34,9 +34,9 @@ function HomePage() {
     <>
       <div className="container">
         <Hero />
-        <div className="row">
+        <div className="row ">
           {films?.map((film, index) => (
-            <div className="col sm 5" key={film.id + index}>
+            <div className="col-sm 5" key={film.id + index}>
               <Card film={film} />
             </div>
           ))}

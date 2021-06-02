@@ -19,7 +19,7 @@ function Profile() {
 
   const loadTrans = async () => {
     try {
-      const response = await API.get(`/transactions`);
+      const response = await API.get(`/transactions/user`);
       console.log(response);
       setTrans(response.data.data.transaction);
     } catch (error) {
@@ -72,14 +72,14 @@ function Profile() {
           console.log(trx);
           return (
             <div className="history-trans">
-              <h5>{trx.status}</h5>
+              <h5>{trx.film.tittle}</h5>
               <h6></h6>
               <div className="history-price">
                 <div>
-                  <h6>Total Price</h6>
+                  <h6>{trx.film.price}</h6>
                 </div>
                 <div>
-                  <h6>status</h6>
+                  <h6>{trx.status}</h6>
                 </div>
               </div>
             </div>

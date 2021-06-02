@@ -49,6 +49,7 @@ const {
   deleteTransaction,
   patchApprove,
   patchDecline,
+  getTransactionUser,
 } = require("../controllers/transaction");
 router.post(
   "/transaction",
@@ -57,6 +58,7 @@ router.post(
   createTransaction
 );
 router.get("/transactions", getTransaction);
+router.get("/transactions/user", auth, getTransactionUser);
 router.delete("/transactions/:id", deleteTransaction);
 router.patch("/trans/approve/:id", patchApprove);
 router.patch("/trans/decline/:id", patchDecline);
