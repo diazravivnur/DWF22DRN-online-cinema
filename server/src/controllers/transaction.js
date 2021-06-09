@@ -203,16 +203,27 @@ exports.getTransactionUser = async (req, res) => {
 };
 
 exports.getMySelectedFilm = async (req, res) => {
-  const id = req.userId;
-  const id2 = req.params.id;
   try {
+    const { id } = req.params;
+
     let purchases = await transaction.findOne({
-      where: { userId: id, filmid: id2, status: "Approved" },
       include: [
         {
-          model: Film,
+          model: film,
+          as: "film",
+          where: {
+            filmid: id,
+          },
           attributes: {
-            exclude: ["createdAt", "updatedAt"],
+            exclude: ["createdAt", "updatedAt", "userid", "categoryid"],
+          },
+        },
+        {
+          model: transaction,
+          as: "transaction",
+          where: {
+            userid: req.userId,
+            status: "Approved",
           },
         },
       ],

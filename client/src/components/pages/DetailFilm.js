@@ -51,12 +51,12 @@ function DetailFIlm() {
     }
   };
 
-  const [purchase, setPurchase] = useState([]);
+  const [films, setFilms] = useState([]);
 
   const loadOwnedFilms = async () => {
     try {
-      const response = await API.get(`/myfilm/${id}`);
-      setPurchase(response.data.data.purchases);
+      const response = await API.get("/films/owned");
+      setFilms(response.data.data.film);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +68,7 @@ function DetailFIlm() {
 
   const image_url = `http://localhost:5000/uploads/${film?.thumbnail}`;
   console.log(film);
-  console.log(purchase);
+  console.log(films);
   return (
     <>
       <FormModal show={state.showBuyPopup} handleClose={handleCloseBuy}>
@@ -92,7 +92,7 @@ function DetailFIlm() {
         <div className="detail-content">
           <div className="title-buy">
             <h3>{film?.tittle}</h3>
-            {purchase ? (
+            {films.find((ownedFilm) => ownedFilm.id === film.id) ? (
               <div></div>
             ) : (
               <div>
