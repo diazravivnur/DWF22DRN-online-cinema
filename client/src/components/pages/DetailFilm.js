@@ -1,21 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { API } from "../../config/api";
+import { UserContext } from "../../contexts/userContext";
 
 import FormModal from "../Modal/Modal";
 import BuyModal from "../Modal/Buy";
+import AfterBuy from "../Modal/AfterBuy";
 
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import youtubeGetID from "../../utils/youtube";
+
 function DetailFIlm() {
+  const [state, dispatch] = useContext(UserContext);
+  const [showBuy, setShowBuy] = useState(false);
+  const [showPopUp, setShowPopUp] = useState(false);
+
   const params = useParams();
   const { id } = params;
 
-  const [showBuy, setShowBuy] = useState(false);
+  const handleShowBuy = () => {
+    dispatch({ type: "showBuyPopup" });
+  };
+  const handleCloseBuy = () => {
+    dispatch({ type: "hideBuyPopup" });
+  };
 
-  const handleShowBuy = () => setShowBuy(true);
-  const handleCloseBuy = () => setShowBuy(false);
+  // PopUp
+  const handleShowPopUp = () => {
+    dispatch({ type: "showAfterBuyPopUp" });
+  };
+  const handleClosePopUp = () => {
+    dispatch({ type: "hideAfterBuyPopUp" });
+  };
+  const toggleToPopUp = () => {
+    setShowPopUp(true);
+    dispatch({ type: "hideAfterBuyPopUp" });
+  };
 
   const router = useHistory();
 
@@ -30,22 +51,39 @@ function DetailFIlm() {
     }
   };
 
+  const [purchase, setPurchase] = useState([]);
+
+  const loadOwnedFilms = async () => {
+    try {
+      const response = await API.get(`/myfilm/${id}`);
+      setPurchase(response.data.data.purchases);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     loadFilm();
+    loadOwnedFilms();
   }, []);
 
   const image_url = `http://localhost:5000/uploads/${film?.thumbnail}`;
   console.log(film);
+  console.log(purchase);
   return (
     <>
-      <FormModal show={showBuy} handleClose={handleCloseBuy}>
+      <FormModal show={state.showBuyPopup} handleClose={handleCloseBuy}>
         <BuyModal
+          category={film?.category.name}
           filmid={film?.id}
           title={film?.tittle}
           price={film?.price}
-          show={showBuy}
-          handleClose={() => setShowBuy(false)}
+          show={state.showBuyPopup}
+          handleClose={handleCloseBuy}
         ></BuyModal>
+        <AfterBuy
+          show={handleShowPopUp}
+          handleClose={handleClosePopUp}
+        ></AfterBuy>
       </FormModal>
       <div className="film-container">
         <div className="film-content">
@@ -54,10 +92,22 @@ function DetailFIlm() {
         <div className="detail-content">
           <div className="title-buy">
             <h3>{film?.tittle}</h3>
-
-            <button className="hero-link" onClick={handleShowBuy}>
-              Buy Now
-            </button>
+            {purchase ? (
+              <div></div>
+            ) : (
+              <div>
+                <button
+                  className="hero-link"
+                  onClick={() => {
+                    handleShowBuy();
+                  }}
+                >
+                  Buy Now
+                </button>
+                {/* <ModalBuy open={state.isBuy} onClose={handleCloseBuy} loadFilm={film}></ModalBuy>
+                                    <PopUp open={state.isPopUp} onPopClose={handleClosePopUp}></PopUp> */}
+              </div>
+            )}
           </div>
           {/* Videos goes here */}
           {film?.filmURL && (
@@ -70,8 +120,9 @@ function DetailFIlm() {
           )}
 
           {/* Categories goes here */}
+          <h4>{film?.category.name}</h4>
           {/* Price */}
-          <p> Rp. {film?.price}</p>
+          <h5> Rp. {film?.price}</h5>
           <p>{film?.description}</p>
         </div>
       </div>

@@ -8,11 +8,18 @@ import { UserContext } from "../../contexts/userContext";
 import Transferpayment from "../../components/pictures/Transferpayment.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function BuyModal({ filmid, title, price, show, handleClose }) {
+import FormModal from "../Modal/Modal";
+
+function BuyModal({ toggle, filmid, title, price, show, handleClose }) {
   const params = useParams();
   const { id } = params;
   const [preview, setPreview] = useState();
-  const [, dispatch] = useContext(UserContext);
+  const [state, dispatch] = useContext(UserContext);
+
+  const [showPopUp, setShowPopUp] = useState(false);
+
+  const handleShowPopUp = () => setShowPopUp(true);
+  // const handleClosePopUp = () => setShowPopUp(false);
 
   const [form, setForm] = useState({
     filmid: "",
@@ -44,6 +51,7 @@ function BuyModal({ filmid, title, price, show, handleClose }) {
       await API.post(`/transaction`, formData, config);
 
       handleClose();
+      handleShowPopUp();
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +61,6 @@ function BuyModal({ filmid, title, price, show, handleClose }) {
   return (
     <>
       <div className="modal-content" onClick={handleClose}></div>
-
       <div className="modal-buy">
         <div className="header">
           <h3>Cinema Online : </h3>
@@ -104,6 +111,7 @@ function BuyModal({ filmid, title, price, show, handleClose }) {
               type="submit"
               style={{ textAlign: "center" }}
               className="pay-hero-link"
+              onClick={toggle}
             >
               Pay
             </button>

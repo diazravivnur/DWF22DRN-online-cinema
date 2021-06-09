@@ -233,3 +233,77 @@ exports.ownedFilms = async (req, res) => {
     });
   }
 };
+
+exports.getMySelectedFilm = async (req, res) => {
+  try {
+    let purchases = await transaction.findOne({
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+      include: [
+        {
+          model: transaction,
+          as: "transaction",
+          where: {
+            userid: req.userId,
+            status: "Approved",
+          },
+        },
+      ],
+    });
+
+    purchases = JSON.parse(JSON.stringify(purchases));
+    // purchases = purchases.map((purchase) => {
+    //   return {
+    //     ...purchase
+    //   };
+    // });
+
+    console.log(purchases);
+
+    res.send({
+      status: "success",
+      data: {
+        purchases,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      status: "failed",
+      message: "server error",
+    });
+  }
+};
+
+exports.getFilmByCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    let datafilm = await film.findAll({
+      where: { categoryid: id },
+      include: [
+        {
+          model: category,
+          as: "category",
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
+    res.status(200).send({
+      status: "success",
+      data: { film: datafilm },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "server error",
+    });
+  }
+};

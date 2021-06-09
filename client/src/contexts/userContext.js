@@ -22,6 +22,7 @@ const reducer = (state, action) => {
         login: true,
         user: payload,
       };
+    // Login Pop Up
     case "showLoginPopup":
       return {
         ...state,
@@ -31,6 +32,28 @@ const reducer = (state, action) => {
       return {
         ...state,
         showLoginPopup: false,
+      };
+    // After Buy Pop Up
+    case "showAfterBuyPopUp":
+      return {
+        ...state,
+        showAfterBuyPopUp: true,
+      };
+    case "hideAfterBuyPopUp":
+      return {
+        ...state,
+        showAfterBuyPopUp: false,
+      };
+    // Buy Pop Up
+    case "showBuyPopup":
+      return {
+        ...state,
+        showBuyPopup: true,
+      };
+    case "hideBuyPopup":
+      return {
+        ...state,
+        showBuyPopup: false,
       };
     case "failed":
     case "logout":

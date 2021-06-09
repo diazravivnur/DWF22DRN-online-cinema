@@ -16,7 +16,6 @@ const Navbar = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
-  const router = useHistory();
   const handleShowRegister = () => {
     setShowRegister(true);
   };

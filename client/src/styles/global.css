@@ -420,6 +420,13 @@ button:hover {
   margin-left: 50px;
 }
 
+.detail-content h4 {
+  color: gray;
+}
+.detail-content h5 {
+  color: #cd2e71;
+}
+
 .detail-content h3 {
   font-size: 45px;
   font-weight: bold;

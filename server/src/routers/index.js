@@ -34,11 +34,14 @@ const {
   deleteFilm,
   updateFilm,
   ownedFilms,
+  getFilmByCategory,
 } = require("../controllers/film");
 router.post("/film", uploadFile("thumbnail"), createFilm);
 router.get("/films", getFilm);
 router.get("/films/owned", auth, ownedFilms);
+
 router.get("/films/:id", getFilmDetail);
+router.get("/sortbycategory/:id", getFilmByCategory);
 router.delete("/films/:id", deleteFilm);
 router.put("/films/:id", uploadFile("thumbnail"), updateFilm);
 
@@ -50,6 +53,7 @@ const {
   patchApprove,
   patchDecline,
   getTransactionUser,
+  getMySelectedFilm,
 } = require("../controllers/transaction");
 router.post(
   "/transaction",
@@ -59,6 +63,7 @@ router.post(
 );
 router.get("/transactions", getTransaction);
 router.get("/transactions/user", auth, getTransactionUser);
+router.get("/myfilm/:id2", auth, getMySelectedFilm);
 router.delete("/transactions/:id", deleteTransaction);
 router.patch("/trans/approve/:id", patchApprove);
 router.patch("/trans/decline/:id", patchDecline);

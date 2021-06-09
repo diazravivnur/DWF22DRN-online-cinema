@@ -19,6 +19,7 @@ function ListFilm() {
     loadOwnedFilms();
   }, []);
 
+  console.log(films);
   return (
     <>
       <div className="container mt-5">

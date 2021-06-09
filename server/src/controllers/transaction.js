@@ -201,3 +201,43 @@ exports.getTransactionUser = async (req, res) => {
     });
   }
 };
+
+exports.getMySelectedFilm = async (req, res) => {
+  const id = req.userId;
+  const id2 = req.params.id;
+  try {
+    let purchases = await transaction.findOne({
+      where: { userId: id, filmid: id2, status: "Approved" },
+      include: [
+        {
+          model: Film,
+          attributes: {
+            exclude: ["createdAt", "updatedAt"],
+          },
+        },
+      ],
+    });
+
+    purchases = JSON.parse(JSON.stringify(purchases));
+    // purchases = purchases.map((purchase) => {
+    //   return {
+    //     ...purchase
+    //   };
+    // });
+
+    console.log(purchases);
+
+    res.send({
+      status: "success",
+      data: {
+        purchases,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.send({
+      status: "failed",
+      message: "server error",
+    });
+  }
+};
